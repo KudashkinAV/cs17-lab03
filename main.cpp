@@ -82,28 +82,48 @@ temperature convert(temperature& temp,Scale scale){
     result.value = k;
     return result;
 }
+
+bool operator<(temperature& left, temperature& right){
+ temperature t1 = convert(left,Kelvin);
+ temperature t2 = convert(right,Kelvin);
+    return t1.value < t2.value;
+}
+bool operator>(temperature& left, temperature& right){
+    temperature t1 = convert(left,Kelvin);
+    temperature t2 = convert(right,Kelvin);
+    return t1.value > t2.value;
+}
+bool operator==(temperature& left, temperature& right){
+    temperature t1 = convert(left,Kelvin);
+    temperature t2 = convert(right,Kelvin);
+    return t1.value == t2.value;
+}
 int
 main() {
     test_input0();
     test_input1();
     test_input2();
-    size_t number_count;
-    cerr << "Enter number count: ";
-    cin >> number_count;
+    size_t temperature_count;
+    cerr << "Enter temperature count: ";
+    cin >> temperature_count;
 
     cerr << "Enter numbers: ";
-    vector<double> numbers(number_count);
-    for (size_t i = 0; i < number_count; i++) {
-        cin >> numbers[i];
+    vector<temperature> temperatures(temperature_count);
+    for (size_t i = 0; i < temperature_count; i++) {
+        cin >> temperatures[i];
     }
 
     size_t column_count;
     cerr << "Enter column count: ";
     cin >> column_count;
 
-    double min = numbers[0];
-    double max = numbers[0];
-    for (double number : numbers) {
+    for(int i=0;i<temperature_count;i++) {
+        convert(temperatures[i],Kelvin);
+    }
+
+    temperature min = temperatures[0];
+    temperature max = temperatures[0];
+    for (temperature number : temperatures) {
         if (number < min) {
             min = number;
         }
@@ -113,8 +133,9 @@ main() {
     }
 
     vector<size_t> counts(column_count);
-    for (double number : numbers) {
-        size_t column = (size_t)((number - min) / (max - min) * column_count);
+    for (temperature number : temperatures) {
+        size_t column = (size_t)((number.value - min.value) / (max.value - min.value) *
+                column_count);
         if (column == column_count) {
             column--;
         }
