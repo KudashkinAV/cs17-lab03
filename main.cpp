@@ -3,11 +3,30 @@
 
 using namespace std;
 
-enum Scale {Kelvin='k', Celsiy='c', Farengeit='f'};
-struct Tempetature {
+enum Scale {Kelvin='K', Celsiy='C', Farengeit='F'};
+struct temperature {
 Scale scale;
-double temperature;
-};
+double value;
+}temp;
+
+istream& operator>>(istream& in, temperature& t) {
+
+    in>> temp.value;
+    char symbol;
+    in>> symbol;
+    switch(symbol) {
+    case'K':
+        temp.scale = Kelvin;
+        break;
+    case'C':
+        temp.scale = Celsiy;
+        break;
+    case'F':
+        temp.scale = Farengeit;
+        break;
+    }
+    return in;
+}
 
 
 int
