@@ -1,7 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <cassert>
 
 using namespace std;
+
 
 enum Scale {Kelvin='K', Celsiy='C', Farengeit='F'};
 struct temperature {
@@ -11,26 +14,79 @@ double value;
 
 istream& operator>>(istream& in, temperature& t) {
 
-    in>> temp.value;
+    in>> t.value;
     char symbol;
     in>> symbol;
     switch(symbol) {
     case'K':
-        temp.scale = Kelvin;
+        t.scale = Kelvin;
         break;
     case'C':
-        temp.scale = Celsiy;
+        t.scale = Celsiy;
         break;
     case'F':
-        temp.scale = Farengeit;
+        t.scale = Farengeit;
         break;
     }
     return in;
 }
+void test_input0() {
+    istringstream in ("4K");
+    temperature t;
+    in >>t;
+    cout << t.value;
+    assert(t.value==4);
+    assert(t.scale==Kelvin);
+}
+void test_input1() {
+    istringstream in ("5C");
+    temperature t;
+    in >>t;
+    assert(t.value==5);
+    assert(t.scale==Celsiy);
+}
+void test_input2() {
+    istringstream in ("2F");
+    temperature t;
+    in >>t;
+    assert(t.value==2);
+    assert(t.scale==Farengeit);
+}
+temperature convert(temperature& temp,Scale scale){
+    double k;
+    temperature result;
+    result.scale = scale;
+    switch(temp.scale){
+    case Kelvin:
+        k=temp.value;
+        break;
+    case Celsiy:
+        k=temp.value + 273.15;
+        break;
+    case Farengeit:
+        k=(temp.value-32)/1.8+273.15;
+        break;
+    }
 
+    switch(scale) {
+    case Kelvin:
+        break;
+    case Celsiy:
+        k=k+273.15;
+        break;
+    case Farengeit:
+        k=1.8*(k-273.15)+32;
+        break;
 
+    }
+    result.value = k;
+    return result;
+}
 int
 main() {
+    test_input0();
+    test_input1();
+    test_input2();
     size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
