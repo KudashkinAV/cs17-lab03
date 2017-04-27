@@ -8,11 +8,12 @@
 #include <iostream>
 
 
+
 enum Scale {Kelvin='K', Celsiy='C', Farengeit='F'};
 struct temperature {
     Scale scale;
     double value;
-}temp;
+};
 
 std::istream& operator>>(std::istream& in, temperature& t);
 temperature convert(temperature& temp,Scale scale);
