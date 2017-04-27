@@ -6,7 +6,7 @@
 #define LAB01_TEMPERATURE_H
 
 #include <iostream>
-
+#include<cassert>
 
 
 enum Scale {Kelvin='K', Celsiy='C', Farengeit='F'};
