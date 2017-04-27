@@ -11,35 +11,52 @@ using namespace std;
 
 
 
+void test_input() {
 
-void test_input0() {
-    istringstream in ("4K");
+    istringstream in_0 ("4K");
     temperature t;
-    in >>t;
+    in_0 >>t;
     cout << t.value;
     assert(t.value==4);
     assert(t.scale==Kelvin);
-}
-void test_input1() {
-    istringstream in ("5C");
-    temperature t;
-    in >>t;
+
+
+    istringstream in_1 ("5C");
+
+    in_1 >>t;
     assert(t.value==5);
     assert(t.scale==Celsiy);
-}
-void test_input2() {
-    istringstream in ("2F");
-    temperature t;
-    in >>t;
+
+
+    istringstream in_2 ("2F");
+
+    in_2 >>t;
     assert(t.value==2);
     assert(t.scale==Farengeit);
+
+    istringstream in_3 ("-300C");
+
+    in_3 >>t;
+    assert(!in_3);
+
+    istringstream in_4 ("1488S");
+
+    in_4 >>t;
+    assert(!in_4);
+
+    istringstream in_5 ("oh");
+
+    in_5 >>t;
+    assert(!in_5);
+
+
+
 }
+
 
 int
 main() {
-    test_input0();
-    test_input1();
-    test_input2();
+    test_input();
     size_t temperature_count;
     cerr << "Enter temperature count: ";
     cin >> temperature_count;
