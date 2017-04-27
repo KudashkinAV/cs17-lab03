@@ -48,6 +48,10 @@ main() {
     vector<temperature> temperatures(temperature_count);
     for (size_t i = 0; i < temperature_count; i++) {
         cin >> temperatures[i];
+        if(!cin){
+            cout<<"\nERROR\n";
+            return 1;
+        }
     }
 
     size_t column_count;
@@ -113,6 +117,7 @@ main() {
         }
         cout << '\n';
     }
+
 
     return 0;
 }

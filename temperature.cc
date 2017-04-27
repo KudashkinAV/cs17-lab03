@@ -2,12 +2,17 @@
 // Created by u211-13 on 27.04.2017.
 //
 #include "temperature.h"
-#include <iostream>
+
 std::istream& operator>>(std::istream& in, temperature& t) {
 
     in>> t.value;
+    if(!in)
+    {
+        in.setstate(std::ios_base::failbit)  ;
+    }
     char symbol;
     in>> symbol;
+
     switch(symbol) {
     case'K':
         t.scale = Kelvin;
@@ -18,6 +23,16 @@ std::istream& operator>>(std::istream& in, temperature& t) {
     case'F':
         t.scale = Farengeit;
         break;
+    default:in.setstate(std::ios_base::failbit)  ;
+    }
+    if(t.scale == Kelvin&&t.value<0){
+        in.setstate(std::ios_base::failbit)  ;
+    }
+    if(t.scale == Celsiy&&t.value< -273.15){
+        in.setstate(std::ios_base::failbit)  ;
+    }
+    if(t.scale == Kelvin&&t.value<-459.67){
+        in.setstate(std::ios_base::failbit)  ;
     }
     return in;
 }
@@ -69,4 +84,9 @@ bool operator==(temperature& left, temperature& right) {
     return t1.value == t2.value;
 }
 
-bool correct()
+void test_input(temperature t){
+if(t.scale){
+
+}
+
+}
