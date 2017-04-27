@@ -2,15 +2,11 @@
 #include <vector>
 #include <sstream>
 #include <cassert>
+#include "temperature.h"
 
 using namespace std;
 
 
-enum Scale {Kelvin='K', Celsiy='C', Farengeit='F'};
-struct temperature {
-Scale scale;
-double value;
-}temp;
 
 istream& operator>>(istream& in, temperature& t) {
 
@@ -30,28 +26,7 @@ istream& operator>>(istream& in, temperature& t) {
     }
     return in;
 }
-void test_input0() {
-    istringstream in ("4K");
-    temperature t;
-    in >>t;
-    cout << t.value;
-    assert(t.value==4);
-    assert(t.scale==Kelvin);
-}
-void test_input1() {
-    istringstream in ("5C");
-    temperature t;
-    in >>t;
-    assert(t.value==5);
-    assert(t.scale==Celsiy);
-}
-void test_input2() {
-    istringstream in ("2F");
-    temperature t;
-    in >>t;
-    assert(t.value==2);
-    assert(t.scale==Farengeit);
-}
+
 temperature convert(temperature& temp,Scale scale){
     double k;
     temperature result;
@@ -84,8 +59,8 @@ temperature convert(temperature& temp,Scale scale){
 }
 
 bool operator<(temperature& left, temperature& right){
- temperature t1 = convert(left,Kelvin);
- temperature t2 = convert(right,Kelvin);
+    temperature t1 = convert(left,Kelvin);
+    temperature t2 = convert(right,Kelvin);
     return t1.value < t2.value;
 }
 bool operator>(temperature& left, temperature& right){
@@ -93,11 +68,35 @@ bool operator>(temperature& left, temperature& right){
     temperature t2 = convert(right,Kelvin);
     return t1.value > t2.value;
 }
-bool operator==(temperature& left, temperature& right){
-    temperature t1 = convert(left,Kelvin);
-    temperature t2 = convert(right,Kelvin);
+bool operator==(temperature& left, temperature& right) {
+    temperature t1 = convert(left, Kelvin);
+    temperature t2 = convert(right, Kelvin);
     return t1.value == t2.value;
 }
+
+void test_input0() {
+    istringstream in ("4K");
+    temperature t;
+    in >>t;
+    cout << t.value;
+    assert(t.value==4);
+    assert(t.scale==Kelvin);
+}
+void test_input1() {
+    istringstream in ("5C");
+    temperature t;
+    in >>t;
+    assert(t.value==5);
+    assert(t.scale==Celsiy);
+}
+void test_input2() {
+    istringstream in ("2F");
+    temperature t;
+    in >>t;
+    assert(t.value==2);
+    assert(t.scale==Farengeit);
+}
+
 int
 main() {
     test_input0();
@@ -146,7 +145,7 @@ main() {
     const size_t axis_width = 4;
     const size_t chart_width = screen_width - axis_width;
 
-    // Можно было бы считать в предыдущем цикле, но так более наглядно.
+
     size_t max_count = 0;
     for (size_t count : counts) {
         if (count > max_count) {
